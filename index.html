@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizzeria NiLù</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="toolbar">
+    <!-- HAMBURGER MENU -->
+    <div class="hamburger" onclick="toggleHamburger()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <nav class="top-menu" aria-label="Menu principale">
+        <button class="menu-item" aria-controls="chi" onclick="toggleDropdown('chi')">Chi siamo</button>
+        <button class="menu-item" aria-controls="dove" onclick="toggleDropdown('dove')">Dove siamo</button>
+        <button class="menu-item" aria-controls="contatti" onclick="toggleDropdown('contatti')">Contatti</button>
+        <button class="menu-item cart-btn" aria-controls="carrello" onclick="toggleDropdown('carrello')">
+            Carrello (<span id="cart-count">0</span>)
+        </button>
+    </nav>
+</header>
+
+<!-- MENU MOBILE -->
+<div class="mobile-menu" id="mobileMenu">
+    <button class="menu-item" onclick="toggleDropdown('chi'); closeHamburgerMenu();">Chi siamo</button>
+    <button class="menu-item" onclick="toggleDropdown('dove'); closeHamburgerMenu();">Dove siamo</button>
+    <button class="menu-item" onclick="toggleDropdown('contatti'); closeHamburgerMenu();">Contatti</button>
+    <button class="menu-item" onclick="toggleDropdown('carrello'); closeHamburgerMenu();">
+        Carrello (<span id="cart-count-mobile">0</span>)
+    </button>
+</div>
+
+<!-- DROPDOWN -->
+<section id="chi" class="dropdown blur-box">
+    <button class="close-dropdown" onclick="closeDropdown(this)">✕</button>
+    <p>Siamo una pizzeria artigianale che unisce tradizione e innovazione.</p>
+</section>
+
+<section id="dove" class="dropdown blur-box">
+    <button class="close-dropdown" onclick="closeDropdown(this)">✕</button>
+    <p>Via Capitano Vincenzo Pellegrini 157, Sonnino (LT)</p>
+</section>
+
+<section id="contatti" class="dropdown blur-box">
+    <button class="close-dropdown" onclick="closeDropdown(this)">✕</button>
+    <p>Telefono: 329 395 3968</p>
+</section>
+
+<!-- CARRELLO -->
+<aside id="carrello" class="dropdown blur-box">
+    <button class="close-dropdown" onclick="closeDropdown(this)">✕</button>
+    <h3>Il tuo Ordine</h3>
+    <ul id="lista-carrello"></ul>
+
+    <hr>
+
+    <p><strong>Totale: € <span id="totale-prezzo">0.00</span></strong></p>
+
+    <form class="form-ordine" onsubmit="event.preventDefault(); confermaOrdine();">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" placeholder="Inserisci il tuo nome" required>
+
+        <label for="orario">Orario ritiro:</label>
+        <input type="time" id="orario" required>
+
+        <button class="btn-conferma" type="submit">Conferma Ordine</button>
+    </form>
+</aside>
+
+<!-- CONTENUTO -->
+<main class="menu-container">
+
+    <!-- PIZZE ROSSE -->
+    <section class="menu-list">
+        <h2>Pizze Rosse</h2>
+
+        <article class="pizza">
+            <img src="pizze-rosse/pizza-margherita.jpg" alt="Pizza Margherita">
+            <div class="pizza-info">
+                <h3>Margherita</h3>
+                <p>Pomodoro, mozzarella, basilico</p>
+                <p class="price">€ 6.00</p>
+            </div>
+            <button onclick="addToCart('Margherita', 6.00)">Aggiungi</button>
+        </article>
+
+        <article class="pizza">
+            <img src="pizze-rosse/pizza-diavola.jpg" alt="Pizza Diavola">
+            <div class="pizza-info">
+                <h3>Diavola</h3>
+                <p>Pomodoro, mozzarella, salame piccante</p>
+                <p class="price">€ 7.50</p>
+            </div>
+            <button onclick="addToCart('Diavola', 7.50)">Aggiungi</button>
+        </article>
+
+        <article class="pizza">
+            <img src="pizze-rosse/pizza-capricciosa.jpg" alt="Pizza Capricciosa">
+            <div class="pizza-info">
+                <h3>Capricciosa</h3>
+                <p>Pomodoro, mozzarella, prosciutto, funghi, olive, carciofi</p>
+                <p class="price">€ 8.50</p>
+            </div>
+            <button onclick="addToCart('Capricciosa', 8.50)">Aggiungi</button>
+        </article>
+
+        <article class="pizza">
+            <img src="pizze-rosse/pizza-marinara.jpg" alt="Pizza Marinara">
+            <div class="pizza-info">
+                <h3>Marinara</h3>
+                <p>Pomodoro, aglio, origano</p>
+                <p class="price">€ 7.00</p>
+            </div>
+            <button onclick="addToCart('Marinara', 7.00)">Aggiungi</button>
+        </article>
+
+        <article class="pizza">
+            <img src="pizze-rosse/pizza-bufalina-rossa.jpg" alt="Pizza Bufalina">
+            <div class="pizza-info">
+                <h3>Bufalina</h3>
+                <p>Pomodoro, mozzarella di bufala, basilico</p>
+                <p class="price">€ 8.00</p>
+            </div>
+            <button onclick="addToCart('Bufalina', 8.00)">Aggiungi</button>
+        </article>
+
+        <article class="pizza">
+            <img src="pizze-rosse/pizza-ortolana.jpg" alt="Pizza Ortolana">
+            <div class="pizza-info">
+                <h3>Ortolana</h3>
+                <p>Pomodoro, mozzarella, verdure grigliate</p>
+                <p class="price">€ 8.00</p>
+            </div>
+            <button onclick="addToCart('Ortolana', 8.00)">Aggiungi</button>
+        </article>
+
+        <article class="pizza">
+            <img src="pizze-rosse/pizza-tonno-cipolla.jpg" alt="Pizza Tonno e Cipolla">
+            <div class="pizza-info">
+                <h3>Tonno & Cipolla</h3>
+                <p>Pomodoro, mozzarella, tonno, cipolla</p>
+                <p class="price">€ 7.50</p>
+            </div>
+            <button onclick="addToCart('Tonno & Cipolla', 7.50)">Aggiungi</button>
+        </article>
+
+        <article class="pizza">
+            <img src="pizze-rosse/pizza-americana.jpg" alt="Pizza Americana">
+            <div class="pizza-info">
+                <h3>Americana</h3>
+                <p>Pomodoro, mozzarella, wurstel, patatine</p>
+                <p class="price">€ 7.50</p>
+            </div>
+            <button onclick="addToCart('Americana', 7.50)">Aggiungi</button>
+        </article>
+
+    </section>
+
+    <!-- PIZZE BIANCHE -->
+    <section class="menu-list">
+        <h2>Pizze Bianche</h2>
+
+        <article class="pizza">
+            <img src="pizze-bianche/pizza-patate-rosmarino.jpg" alt="Pizza Patate e Rosmarino">
+            <div class="pizza-info">
+                <h3>Patate & Rosmarino</h3>
+                <p>Mozzarella, patate, rosmarino</p>
+                <p class="price">€ 7.00</p>
+            </div>
+            <button onclick="addToCart('Patate & Rosmarino', 7.00)">Aggiungi</button>
+        </article>
+
+        <article class="pizza">
+            <img src="pizze-bianche/pizza-4-formaggi.jpg" alt="Pizza Quattro Formaggi">
+            <div class="pizza-info">
+                <h3>4 Formaggi</h3>
+                <p>Mozzarella, gorgonzola, fontina, parmigiano</p>
+                <p class="price">€ 8.50</p>
+            </div>
+            <button onclick="addToCart('4 Formaggi', 8.50)">Aggiungi</button>
+        </article>
+
+        <article class="pizza">
+            <img src="pizze-bianche/pizza-speck-brie.jpg" alt="Pizza Speck e Brie">
+            <div class="pizza-info">
+                <h3>Speck & Brie</h3>
+                <p>Mozzarella, speck, brie</p>
+                <p class="price">€ 9.00</p>
+            </div>
+            <button onclick="addToCart('Speck & Brie', 9.00)">Aggiungi</button>
+        </article>
+
+        <article class="pizza">
+            <img src="pizze-bianche/pizza-tartufata.jpg" alt="Pizza Tartufata">
+            <div class="pizza-info">
+                <h3>Tartufata</h3>
+                <p>Mozzarella, crema di tartufo, funghi</p>
+                <p class="price">€ 10.00</p>
+            </div>
+            <button onclick="addToCart('Tartufata', 10.00)">Aggiungi</button>
+        </article>
+
+        <article class="pizza">
+            <img src="pizze-bianche/pizza-gorgonzola-noci.jpg" alt="Pizza Gorgonzola e Noci">
+            <div class="pizza-info">
+                <h3>Gorgonzola & Noci</h3>
+                <p>Mozzarella, gorgonzola, noci</p>
+                <p class="price">€ 8.50</p>
+            </div>
+            <button onclick="addToCart('Gorgonzola & Noci', 8.50)">Aggiungi</button>
+        </article>
+
+        <article class="pizza">
+            <img src="pizze-bianche/pizza-mortadella-pistacchio.jpg" alt="Pizza Mortadella e Pistacchio">
+            <div class="pizza-info">
+                <h3>Mortadella & Pistacchio</h3>
+                <p>Burrata, mortadella, pesto di pistacchio, granella di pistacchio</p>
+                <p class="price">€ 9.50</p>
+            </div>
+            <button onclick="addToCart('Mortadella & Pistacchio', 9.50)">Aggiungi</button>
+        </article>
+
+        <article class="pizza">
+            <img src="pizze-bianche/pizza-porcini-salsiccia.jpg" alt="Pizza Porcini e Salsiccia">
+            <div class="pizza-info">
+                <h3>Porcini & Salsiccia</h3>
+                <p>Mozzarella, funghi porcini, salsiccia</p>
+                <p class="price">€ 9.00</p>
+            </div>
+            <button onclick="addToCart('Porcini & Salsiccia', 9.00)">Aggiungi</button>
+        </article>
+
+    </section>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
